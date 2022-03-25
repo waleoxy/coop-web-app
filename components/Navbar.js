@@ -1,10 +1,40 @@
 import Link from "next/link";
 import React from "react";
+import { useContext, useState, useEffect } from "react";
+import { Store } from "../contexts/store";
 
 const Navbar = () => {
+  const [show, handleShow] = useState(false);
+
+  const transitionNavBar = () => {
+    if (window.scrollY > 100) {
+      handleShow(true);
+    } else {
+      handleShow(false);
+    }
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", transitionNavBar);
+
+    return () => window.removeEventListener("scroll", transitionNavBar);
+  }, []);
+
+  const { state, dispatch } = useContext(Store);
+  const { isLogin } = state;
+  const handleLogin = () => {
+    dispatch({ type: "IS_LOGIN" });
+  };
+
   return (
-    <div className=" flex items-center justify-between top-0 z-50 h-20 w-full sticky">
-      <div className="px-2 py-1 ml-6 flex items-center">
+    <div
+      className={
+        show
+          ? `px-10 flex items-center justify-between -top-6 z-50 h-20 w-screen sticky
+           bg-rose-400 transition translate-y-6 duration-700
+           bg-transparent text-white ease-in-out`
+          : `px-10 flex items-center justify-between bg-orange-100 top-0 z-50 h-20 w-screen sticky`
+      }>
+      <div className="  flex items-center w-auto">
         <img
           className="h-20 w-16 py-2 bg-transparent"
           src="/images/imgLogo.png"
@@ -16,15 +46,27 @@ const Navbar = () => {
           alt="logo"
         />
       </div>
-      <div className="flex items-center space-x-6 pt-3">
+      <div
+        className={
+          show
+            ? `flex items-center w-auto space-x-6 text-white text-base`
+            : `flex items-center w-auto space-x-6 text-red-600 text-base`
+        }>
         <Link href="/">Home</Link>
-        <Link href="/">About</Link>
-        <Link href="/">Blog</Link>
-        <Link href="/">Contact</Link>
-        <Link href="/">FAQ</Link>
+        <Link href="/#about">About</Link>
+        <Link href="/#newsletter">Newsletter</Link>
+        <Link href="/#contact">Contact</Link>
+        <Link href="/#faq">FAQ</Link>
       </div>{" "}
-      <div>
-        <Link href="/">Login</Link>
+      <div className="w-28 mr-10">
+        <Link href="/">
+          <button
+            onClick={handleLogin}
+            className="px-4 py-1 w-28 bg-pink-700 text-white font-medium font-serif
+          rounded-lg text-lg tracking-widest">
+            {!isLogin ? `Login` : `Register`}
+          </button>
+        </Link>
       </div>
     </div>
   );
