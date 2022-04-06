@@ -1,0 +1,25 @@
+import bcrypt from "bcryptjs";
+import nextConnect from "next-connect";
+//import { signToken } from "../../../components/utils/auth";
+import connectDb from "../../../database/connectDb";
+import User from "../../../model/User";
+
+const handler = nextConnect();
+
+handler.post(async (req, res) => {
+  await connectDb(process.env.MONGODB_URL);
+  const user = await User.findOne({ email: req.body.userId });
+  if (user && bcrypt.compareSync(req.body.password, user.password)) {
+    //const token = signToken(user);
+    res.send({
+      //   token,
+      //   _id: user._id,
+      //   name: user.name,
+      //   email: user.email,
+      //   isAdmin: user.isAdmin,
+    });
+  } else {
+    res.status(401).send({ message: "Invalid email or password" });
+  }
+});
+export default handler;

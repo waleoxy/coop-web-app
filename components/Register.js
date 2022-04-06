@@ -1,5 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
+import { useSnackbar } from "notistack";
+import jsCookie from "js-cookie";
+import { useRouter } from "next/router";
+import { getError } from "../contexts/error";
+import { Store } from "../contexts/store";
+import axios from "axios";
 
 const Register = () => {
   const {
@@ -8,7 +14,52 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async ({}) => {};
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const router = useRouter();
+  const { state, dispatch } = useContext(Store);
+  const { userInfo } = state;
+  const { redirect } = router.query;
+
+  // useEffect(() => {
+  //   if (userInfo) {
+  //     router.push("/");
+  //   }
+  // }, []);
+
+  const onSubmit = async ({
+    firstName,
+    lastName,
+    phoneNumber,
+    email,
+    password,
+    confPassword,
+    referee_a_id,
+    referee_b_id,
+  }) => {
+    if (password !== confPassword) {
+      closeSnackbar();
+      enqueueSnackbar("Passwords didnt match", { variant: "errors" });
+      return;
+    } else {
+      try {
+        const { data } = await axios.post("/api/users/register", {
+          firstName,
+          lastName,
+          phoneNumber,
+          email,
+          password,
+          confPassword,
+          referee_a_id,
+          referee_b_id,
+        });
+        dispatch({ type: "USER_LOGIN", payload: data });
+        jsCookie.set("userInfo", data);
+        router.push(redirect || "/dashboard");
+      } catch (error) {
+        enqueueSnackbar(getError(error), { variant: "errors" });
+      }
+    }
+  };
 
   return (
     <div
@@ -20,7 +71,7 @@ const Register = () => {
         Register Here
       </p>
       <form
-        className="flex flex-col space-y-3 px-10 py-5"
+        className="flex flex-col space-y-3 px-8 py-3"
         onSubmit={handleSubmit(onSubmit)}>
         <input
           className="input"
@@ -40,7 +91,7 @@ const Register = () => {
           : ""}
         <input
           className="input"
-          {...register("lastNameName", {
+          {...register("lastName", {
             required: true,
             minLength: {
               value: 2,

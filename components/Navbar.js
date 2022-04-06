@@ -4,13 +4,14 @@ import { useContext, useState, useEffect } from "react";
 import { Store } from "../contexts/store";
 
 const Navbar = () => {
-  const [show, handleShow] = useState(false);
+  const { state, dispatch } = useContext(Store);
+  const { isShow, isLogin } = state;
 
   const transitionNavBar = () => {
     if (window.scrollY > 100) {
-      handleShow(true);
+      dispatch({ type: "IS_SHOW" });
     } else {
-      handleShow(false);
+      dispatch({ type: "IS_NOT_SHOW" });
     }
   };
   useEffect(() => {
@@ -19,8 +20,6 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", transitionNavBar);
   }, []);
 
-  const { state, dispatch } = useContext(Store);
-  const { isLogin } = state;
   const handleLogin = () => {
     dispatch({ type: "IS_LOGIN" });
   };
@@ -28,9 +27,9 @@ const Navbar = () => {
   return (
     <div
       className={
-        show
+        isShow
           ? `px-10 flex items-center justify-between -top-6 z-50 h-20 w-screen sticky
-           bg-rose-400 transition translate-y-6 duration-700
+           bg-rose-800 transition translate-y-6 duration-700
            bg-transparent text-white ease-in-out`
           : `px-10 flex items-center justify-between bg-orange-100 top-0 z-50 h-20 w-screen sticky`
       }>
@@ -41,14 +40,14 @@ const Navbar = () => {
           alt="logo"
         />
         <img
-          className="h-8 w-24 mt-6 bg-transparent"
-          src="/images/coopLogo.png"
+          className="h-8 w-24 mt-6"
+          src={isShow ? `/images/coopLogo.png` : `/images/coopLogoH.png`}
           alt="logo"
         />
       </div>
       <div
         className={
-          show
+          isShow
             ? `flex items-center w-auto space-x-6 text-white text-base`
             : `flex items-center w-auto space-x-6 text-red-600 text-base`
         }>
@@ -73,3 +72,12 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+// export async function getStaticProps() {
+
+//   return {
+//     props: {
+
+//     },
+//   };
+// }
