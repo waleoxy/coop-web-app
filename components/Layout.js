@@ -8,7 +8,7 @@ const Layout = ({ title, description, children }) => {
     <div
       className={`px-24 pb-9  min-h-screen w-screen items-center
       flex flex-col bg-[url("/images/coop.jpg")] bg-no-repeat 
-      bg-fixed bg-center`}>
+      bg-cover bg-center`}>
       <Head>
         <title>{title ? `${title}-CoopBank` : `CoopBank`}</title>
         {description && <meta name="description" content={description}></meta>}

@@ -16,9 +16,10 @@ import Newsletter from "./newsletter";
 export default function Home() {
   const { state } = useContext(Store);
   const { isLogin } = state;
+  let show = false;
   return (
     <>
-      <Navbar />
+      <Navbar show={show} />
       <Layout>{isLogin ? <Login /> : <Register />}</Layout>
       <About />
       <Newsletter />

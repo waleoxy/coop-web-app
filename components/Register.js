@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSnackbar } from "notistack";
 import jsCookie from "js-cookie";
@@ -22,7 +22,7 @@ const Register = () => {
 
   // useEffect(() => {
   //   if (userInfo) {
-  //     router.push("/");
+  //     router.push("/dashboard");
   //   }
   // }, []);
 
@@ -60,7 +60,6 @@ const Register = () => {
       }
     }
   };
-
   return (
     <div
       className="bg-white flex flex-col items-center justify-center

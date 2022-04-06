@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import nextConnect from "next-connect";
 import connectDb from "../../../database/connectDb";
 import User from "../../../model/User";
-import { signToken } from "jsonwebtoken";
+import { signToken } from "../../../contexts/auth";
 
 const handler = nextConnect();
 handler.post(async (req, res) => {
@@ -26,7 +26,7 @@ handler.post(async (req, res) => {
     lastName: user.lastName,
     phoneNumber: user.phoneNumber,
     email: user.email,
-    rederee_a_id: user.ref.a.rederee_a_id,
+    referee_a_id: user.ref.a.referee_a_id,
     referee_b_id: user.ref.b.referee_b_id,
     isAdmin: user.isAdmin,
   });

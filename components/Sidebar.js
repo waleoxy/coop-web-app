@@ -10,7 +10,7 @@ const Sidebar = () => {
           <img
             className="h-20 w-16 py-2 bg-transparent"
             src="/images/imgLogo.png"
-            alt
+            alt="pix"
           />
         </div>
         <p className="text-lg font-semibold"> User's Name</p>

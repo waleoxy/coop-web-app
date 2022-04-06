@@ -9,12 +9,12 @@ const Dashboard = () => {
   const { isShow } = state;
   useEffect(() => {
     dispatch({ type: "IS_SHOW" });
-  }, [isShow]);
-
+  }, []);
+  let show = false;
   return (
     <div className=" bg-orange-100 min-h-screen">
       <div className="-mt-6 sticky">
-        <Navbar />
+        <Navbar show={show} />
       </div>
       <div className="flex px-28 mt-20 mx-12">
         <Sidebar />

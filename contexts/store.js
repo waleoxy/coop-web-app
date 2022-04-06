@@ -7,9 +7,7 @@ export const Store = createContext();
 const initialState = {
   isLogin: false,
   isShow: false,
-  userInfo: jsCookie.get("userInfo")
-    ? JSON.parse(jsCookie.get("userInfo"))
-    : null,
+  userInfo: jsCookie.get("userInfo") ? jsCookie.get("userInfo") : null,
 };
 
 export const StoreProvider = (props) => {
