@@ -15,9 +15,7 @@ const Table = () => {
       </thead>
       <tbody>
         <tr className="h-10">
-          <td className="border border-slate-200">
-            The Sliding Mr. Bones (Next Stop, Pottersville)
-          </td>
+          <td className="border border-slate-200">The Sliding Mr. Bones</td>
           <td className="border border-slate-200">Malcolm Lockyer</td>
           <td className="border border-slate-200">1961</td>
         </tr>

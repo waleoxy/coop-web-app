@@ -6,9 +6,9 @@ import Footer from "./Footer";
 const Layout = ({ title, description, children }) => {
   return (
     <div
-      className={`pt-10 pb-20 min-h-screen w-screen items-center
+      className={`px-24 pb-9  min-h-screen w-screen items-center
       flex flex-col bg-[url("/images/coop.jpg")] bg-no-repeat 
-      bg-cover bg-center`}>
+      bg-fixed bg-center`}>
       <Head>
         <title>{title ? `${title}-CoopBank` : `CoopBank`}</title>
         {description && <meta name="description" content={description}></meta>}
