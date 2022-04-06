@@ -29,18 +29,18 @@ const Navbar = () => {
       className={
         isShow
           ? `px-10 flex items-center justify-between -top-6 z-50 h-20 w-screen sticky
-           bg-rose-800 transition translate-y-6 duration-700
+           bg-rose-900 transition translate-y-6 duration-700
            bg-transparent text-white ease-in-out`
           : `px-10 flex items-center justify-between bg-orange-100 top-0 z-50 h-20 w-screen sticky`
       }>
       <div className="  flex items-center w-auto">
         <img
-          className="h-20 w-16 py-2 bg-transparent"
+          className="h-16 w-12 pb-3 bg-transparent"
           src="/images/imgLogo.png"
           alt="logo"
         />
         <img
-          className="h-8 w-24 mt-6"
+          className="h-8 w-24 mt-2"
           src={isShow ? `/images/coopLogo.png` : `/images/coopLogoH.png`}
           alt="logo"
         />
