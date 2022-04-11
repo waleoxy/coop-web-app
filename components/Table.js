@@ -4,9 +4,11 @@ const Table = () => {
   return (
     <table
       className="table-fixed border-collapse  border-slate-200 
-    mt-11 p-1 bg-white">
+    mt-2 p-1 bg-white w-full">
       <thead>
-        <p className="h-10 py-2 pl-2 border-b-2">Latest Transactions</p>
+        <p className="h-10 py-2 pl-2 text-blue-900 font-semibold border-b-2">
+          Latest transactions
+        </p>
         <tr className="bg-slate-50 h-8">
           <th className="border- border-slate-200">Song</th>
           <th className="border border-slate-200">Artist</th>

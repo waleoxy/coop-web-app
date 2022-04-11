@@ -1,8 +1,18 @@
+import axios from "axios";
+import jsCookie from "js-cookie";
 import { useRouter } from "next/router";
-import React from "react";
+import { useSnackbar } from "notistack";
+import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { getError } from "../contexts/error";
+import { Store } from "../contexts/store";
 
 const Login = () => {
+  const { state, dispatch } = useContext(Store);
+  const { userInfo } = state;
+
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
   const {
     register,
     handleSubmit,
@@ -10,9 +20,27 @@ const Login = () => {
   } = useForm();
 
   const router = useRouter();
+  const { redirect } = router.query;
 
-  const onSubmit = async ({}) => {
-    //router.push("/dashboard");
+  useEffect(() => {
+    if (userInfo) {
+      router.push("/");
+    }
+  }, []);
+
+  const onSubmit = async ({ user_id, email, password }) => {
+    try {
+      const { data } = await axios.post("/api/users/login", {
+        user_id,
+        email,
+        password,
+      });
+      dispatch({ type: "USER_LOGIN", payload: data });
+      jsCookie.set("userInfo", JSON.stringify(data));
+      router.push(redirect || "/dashboard");
+    } catch (error) {
+      enqueueSnackbar(getError(error), { variant: "error" });
+    }
   };
 
   return (

@@ -70,7 +70,7 @@ const Register = () => {
         Register Here
       </p>
       <form
-        className="flex flex-col space-y-3 px-8 py-3"
+        className="flex flex-col space-y-3 px-8 py-3 text-red-700"
         onSubmit={handleSubmit(onSubmit)}>
         <input
           className="input"

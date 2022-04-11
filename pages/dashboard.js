@@ -10,15 +10,26 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch({ type: "IS_SHOW" });
   }, []);
-  let show = false;
+
   return (
-    <div className=" bg-orange-100 min-h-screen">
+    <div className=" bg-white min-h-screen w-screen">
       <div className="-mt-6 sticky">
-        <Navbar show={show} />
+        <Navbar />
       </div>
-      <div className="flex px-28 mt-20 mx-12">
-        <Sidebar />
-        <CenterPage />
+      <div className="flex px-20 mt-16 mx-16 h-full ">
+        <div className="w-56 h-full">
+          {" "}
+          <Sidebar />
+        </div>
+
+        <div className="flex flex-col w-full">
+          <p
+            className="pl-6 text-rose-900 text-xl font-semibold tracking-wide
+       font-mono">
+            Dashboard
+          </p>
+          <CenterPage />
+        </div>
       </div>
     </div>
   );

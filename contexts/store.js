@@ -7,6 +7,8 @@ export const Store = createContext();
 const initialState = {
   isLogin: false,
   isShow: false,
+  isDashbrd: false,
+  isProfOpen: false,
   userInfo: jsCookie.get("userInfo") ? jsCookie.get("userInfo") : null,
 };
 

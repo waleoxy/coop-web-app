@@ -1,11 +1,15 @@
+import jsCookie from "js-cookie";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import { useContext, useState, useEffect } from "react";
 import { Store } from "../contexts/store";
 
 const Navbar = () => {
   const { state, dispatch } = useContext(Store);
-  const { isShow, isLogin } = state;
+  const { isShow, isLogin, isDashbrd } = state;
+
+  const router = useRouter();
 
   const transitionNavBar = () => {
     if (window.scrollY > 100) {
@@ -24,12 +28,19 @@ const Navbar = () => {
     dispatch({ type: "IS_LOGIN" });
   };
 
+  const handleLogout = () => {
+    dispatch({ type: "USER_LOGOUT" });
+    jsCookie.remove("userInfo");
+    dispatch({ type: "IS_NOT_SHOW" });
+    router.push("/");
+  };
+
   return (
     <div
       className={
         isShow
           ? `px-10 flex items-center justify-between -top-6 z-50 h-20 w-screen sticky
-           bg-rose-900 transition translate-y-6 duration-700
+           bg-blue-900 transition translate-y-6 duration-700
            bg-transparent text-white ease-in-out`
           : `px-10 flex items-center justify-between bg-orange-100 top-0 z-50 h-20 w-screen sticky`
       }>
@@ -58,14 +69,21 @@ const Navbar = () => {
         <Link href="/#faq">FAQ</Link>
       </div>{" "}
       <div className="w-28 mr-10">
-        <Link href="/">
+        {!isDashbrd ? (
           <button
             onClick={handleLogin}
             className="px-4 py-1 w-28 bg-pink-700 text-white font-medium font-serif
           rounded-lg text-lg tracking-widest">
             {!isLogin ? `Login` : `Register`}
           </button>
-        </Link>
+        ) : (
+          <button
+            onClick={handleLogout}
+            className="px-4 py-1 w-28 bg-pink-700 text-white font-medium font-serif
+          rounded-lg text-lg tracking-widest">
+            Logout
+          </button>
+        )}
       </div>
     </div>
   );

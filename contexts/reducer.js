@@ -7,7 +7,13 @@ export const reducer = (state, action) => {
     case "IS_NOT_SHOW":
       return { ...state, isShow: false };
     case "USER_LOGIN": {
-      return { ...state, userInfo: action.payload };
+      return { ...state, isDashbrd: true, userInfo: action.payload };
+    }
+    case "USER_LOGOUT": {
+      return { ...state, isDashbrd: false, userInfo: null };
+    }
+    case "PROFILE_OPEN": {
+      return { ...state, isProfOpen: true };
     }
 
     default:
