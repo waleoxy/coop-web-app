@@ -25,7 +25,7 @@ const Sidebar = () => {
             alt="pix"
           />
         </div>
-        <p className="text-lg font-semibold"> User/s Name</p>
+        <p className="text-lg font-semibold"> {"User's Name"}</p>
       </div>
       <div>
         <p
