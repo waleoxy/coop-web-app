@@ -42,29 +42,35 @@ const UserSchema = new mongoose.Schema(
       minlength: 6,
       trim: true,
     },
-    address: {
+    address_a: {
+      type: String,
+      default: "address",
+    },
+    address_b: {
+      type: String,
+      default: "address",
+    },
+    address_c: {
       type: String,
       default: "address",
     },
     ref: {
       a: {
         referee_a_id: { type: String, required: true },
-        firstName: { type: String },
-        lastName: { type: String },
       },
       b: {
         referee_b_id: { type: String, required: true },
-        firstName: { type: String },
-        lastName: { type: String },
       },
     },
 
     nextOfKin: {
-      firstName: { type: String },
-      lastName: { type: String },
-      relationship: { type: String },
+      fullName: { type: String },
+      phoneNumber: { type: String },
+      email: { type: String },
+      address_a: { type: String },
+      address_b: { type: String },
+      address_c: { type: String },
     },
-    age: { type: Number },
     isAdmin: { type: Boolean, required: true, default: false },
   },
   {

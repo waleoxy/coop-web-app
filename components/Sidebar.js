@@ -9,9 +9,12 @@ const Sidebar = () => {
   const openProfile = () => {
     dispatch({ type: "PROFILE_OPEN" });
   };
+  const closeProfile = () => {
+    dispatch({ type: "PROFILE_CLOSE" });
+  };
 
   return (
-    <div className=" bg-white w-56 h-full mt-7 rounded-lg">
+    <div className=" bg-slate-100 w-56 h-full mt-7 rounded-lg">
       <div
         className=" flex flex-col justify-center 
     items-center my-4 ">
@@ -22,14 +25,15 @@ const Sidebar = () => {
             alt="pix"
           />
         </div>
-        <p className="text-lg font-semibold"> User's Name</p>
+        <p className="text-lg font-semibold"> User/s Name</p>
       </div>
       <div>
         <p
-          className="w-full h-10 bg-gray-300 flex
-        text-justify my-1 pt-2 self-center text-base px-2">
+          onClick={closeProfile}
+          className="w-full h-10 bg-gray-600 active:scale-95 cursor-pointer flex
+        text-justify my-1 pt-2 self-center text-blue-100 text-base px-2">
           <span className="h-6 w-6">
-            <HomeIcon className="font-light h-5 w-5 text-blue-900" />{" "}
+            <HomeIcon className="font-light h-5 w-5 text-white" />{" "}
           </span>
           Dashboard
         </p>
@@ -37,7 +41,7 @@ const Sidebar = () => {
           onClick={openProfile}
           className="flex w-full my-1 h-10  bg-gray-50 cursor-pointer
         text-justify pt-2 px-2 self-center text-sm
-        hover:bg-gray-300 hover:scale-95">
+        hover:bg-gray-300 hover:scale-95 text-blue-900">
           <span className="h-6 w-6">
             <UserIcon className="font-light h-5 w-5 text-blue-900" />{" "}
           </span>

@@ -15,6 +15,9 @@ export const reducer = (state, action) => {
     case "PROFILE_OPEN": {
       return { ...state, isProfOpen: true };
     }
+    case "PROFILE_CLOSE": {
+      return { ...state, isProfOpen: false };
+    }
 
     default:
       return state;

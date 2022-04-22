@@ -22,11 +22,11 @@ const Login = () => {
   const router = useRouter();
   const { redirect } = router.query;
 
-  useEffect(() => {
-    if (userInfo) {
-      router.push("/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   //   if (userInfo) {
+  //   //     router.push("/dashboard");
+  //   //   }
+  // });
 
   const onSubmit = async ({ user_id, email, password }) => {
     try {
@@ -45,7 +45,7 @@ const Login = () => {
 
   return (
     <div
-      className="bg-white flex flex-col items-center justify-center
+      className="bg-purple-50 flex flex-col items-center justify-center
      w-[350px] rounded-xl">
       <p
         className="text-center py-4 text-3xl font-serif 

@@ -10,7 +10,7 @@ const CenterPage = () => {
   const { isProfOpen } = state;
 
   return (
-    <div className="mt-0 flex flex-col px-6 bg-gray-100 h-full py-3 w-full">
+    <div className="mt-0 flex flex-col px-6 bg-gray-200 h-full py-3 w-full">
       <div className="flex space-x-3">
         <Card isBalance={true} text="Your balance" amount="NGN-300,000" />
         <Card text="Your savings" amount="NGN600,000" />

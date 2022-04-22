@@ -22,9 +22,9 @@ const Register = () => {
 
   // useEffect(() => {
   //   if (userInfo) {
-  //     router.push("/dashboard");
+  //     // router.push("/dashboard");
   //   }
-  // }, []);
+  // });
 
   const onSubmit = async ({
     firstName,
@@ -62,7 +62,7 @@ const Register = () => {
   };
   return (
     <div
-      className="bg-white flex flex-col items-center justify-center
+      className="mt-4 bg-purple-50 flex flex-col items-center justify-center
       w-[350px] rounded-xl">
       <p
         className="text-center py-4 text-3xl font-serif 

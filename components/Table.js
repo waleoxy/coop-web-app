@@ -4,7 +4,7 @@ const Table = () => {
   return (
     <table
       className="table-fixed border-collapse  border-slate-200 
-    mt-2 p-1 bg-white w-full">
+    mt-4 p-1 bg-white w-full">
       <thead>
         <p className="h-10 py-2 pl-2 text-blue-900 font-semibold border-b-2">
           Latest transactions

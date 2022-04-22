@@ -22,16 +22,18 @@ const Navbar = () => {
     window.addEventListener("scroll", transitionNavBar);
 
     return () => window.removeEventListener("scroll", transitionNavBar);
-  }, []);
+  });
 
   const handleLogin = () => {
     dispatch({ type: "IS_LOGIN" });
+    router.push("/");
   };
 
   const handleLogout = () => {
     dispatch({ type: "USER_LOGOUT" });
     jsCookie.remove("userInfo");
     dispatch({ type: "IS_NOT_SHOW" });
+    dispatch({ type: "PROFILE_CLOSE" });
     router.push("/");
   };
 
@@ -41,8 +43,10 @@ const Navbar = () => {
         isShow
           ? `px-10 flex items-center justify-between -top-6 z-50 h-20 w-screen sticky
            bg-blue-900 transition translate-y-6 duration-700
-           bg-transparent text-white ease-in-out`
-          : `px-10 flex items-center justify-between bg-orange-100 top-0 z-50 h-20 w-screen sticky`
+            text-white ease-in-out`
+          : `px-10 flex items-center justify-between 
+          bg-gradient-to-r from-red-50 to-purple-200 border-0
+          bg-transparent z-50 h-20 w-screen sticky border-opacity-0`
       }>
       <div className="  flex items-center w-auto">
         <img

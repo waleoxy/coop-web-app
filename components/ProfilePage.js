@@ -1,12 +1,14 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useSnackbar } from "notistack";
 import jsCookies from "js-cookie";
+import { Store } from "../contexts/store";
+import { getError } from "../contexts/error";
 
 const ProfilePage = () => {
-  // const { state, dispatch } = useContext(Store);
-  // const { userInfo } = state;
+  const { state, dispatch } = useContext(Store);
+  const { userInfo } = state;
   const {
     register,
     handleSubmit,
@@ -14,6 +16,7 @@ const ProfilePage = () => {
   } = useForm();
 
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const [isEnabled, setIsEnabled] = useState(true);
 
   // useEffect(() => {
   //   if (userInfo) {
@@ -28,28 +31,58 @@ const ProfilePage = () => {
     email,
     phoneNumber,
     password,
+    address_a,
+    address_b,
+    address_c,
+    nok_name,
+    nok_email,
+    nok_phoneNumber,
+    nok_address_a,
+    nok_address_b,
+    nok_address_c,
+    referee_a,
+    referee_b,
   }) => {
-    //try {
-    //   const data = await axios.post("/api/profile", {
-    //     firstName,
-    //     lastName,
-    //     hospitalId,
-    //     email,
-    //     phoneNumber,
-    //     password,
-    //   });
-    //   dispatch({ type: "USER_SIGNUP_LOGIN", payload: data });
-    //   jsCookies.set("userInfo", JSON.stringify(data));
-    //   navigate("/home");
-    // } catch (err) {
-    //   enqueueSnackbar(getError(err), { variant: "errors" });
-    // }
+    try {
+      const { data } = await axios.put("/api/users/profile", {
+        userId,
+        firstName,
+        lastName,
+        userId,
+        email,
+        phoneNumber,
+        password,
+        address_a,
+        address_b,
+        address_c,
+        nok_name,
+        nok_email,
+        nok_phoneNumber,
+        nok_address_a,
+        nok_address_b,
+        nok_address_c,
+        referee_a,
+        referee_b,
+      });
+      console.log("up", data);
+      dispatch({ type: "USER_LOGIN", payload: data });
+      jsCookies.set("userInfo", JSON.stringify(data));
+    } catch (err) {
+      enqueueSnackbar(getError(err), { variant: "errors" });
+    }
+    setIsEnabled(true);
   };
+  const handleEnableInput = () => {
+    setIsEnabled(false);
+  };
+
   return (
     <div className="w-auto h-full py-3">
       <div className="flex justify-between">
         <p className="text-blue-900 font-semibold">Your Profile</p>
-        <button className="mr-2 py-2 px-8 bg-red-500 text-white rounded-lg mb-2">
+        <button
+          onClick={handleEnableInput}
+          className="mr-2 py-2 px-8 bg-red-500 text-white rounded-lg mb-2">
           Edit
         </button>
       </div>
@@ -57,8 +90,10 @@ const ProfilePage = () => {
         className="grid grid-cols-3 grid-rows-6 mt-1"
         onSubmit={handleSubmit(onSubmit)}>
         <input
+          disabled={isEnabled}
           className="input"
           {...register("firstName", {
+            value: userInfo?.firstName,
             required: true,
             minLength: {
               value: 2,
@@ -73,8 +108,10 @@ const ProfilePage = () => {
             : "Name is required"
           : ""}
         <input
+          disabled={isEnabled}
           className="input"
           {...register("lastName", {
+            value: userInfo?.lastName,
             required: true,
             minLength: {
               value: 2,
@@ -90,21 +127,25 @@ const ProfilePage = () => {
           : ""}
 
         <input
+          disabled={isEnabled}
           className="input"
           {...register("userId", {
+            value: userInfo?._id,
             required: true,
             pattern: /^[A-Za-z$0-9]+/i,
           })}
           placeholder=" Your Id"
         />
         {errors.userId
-          ? errors.hospitalId.type === "pattern"
+          ? errors.userId.type === "pattern"
             ? "Id is not valid"
             : "Id is required"
           : ""}
         <input
+          disabled={isEnabled}
           className="input"
           {...register("email", {
+            value: userInfo?.email,
             required: true,
             pattern: /^[a-z0-9.z_%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
           })}
@@ -116,11 +157,16 @@ const ProfilePage = () => {
             : "Email is required"
           : ""}
         <input
+          disabled={isEnabled}
           className="input"
-          {...register("phoneNumber", { required: true })}
+          {...register("phoneNumber", {
+            value: userInfo?.phoneNumber,
+            required: true,
+          })}
           placeholder=" Phone Number"
         />
         <input
+          disabled={isEnabled}
           className="input"
           {...register("password", {
             required: true,
@@ -134,8 +180,10 @@ const ProfilePage = () => {
             : "Password is required"
           : ""}
         <input
+          disabled={isEnabled}
           className="input"
-          {...register("Address_a", {
+          {...register("address_a", {
+            value: userInfo?.address_a,
             required: true,
             minLength: {
               value: 2,
@@ -144,14 +192,16 @@ const ProfilePage = () => {
           })}
           placeholder=" Address 1"
         />
-        {errors.lastName
-          ? errors.lastName.type === "minLength"
-            ? errors.lastName.message
+        {errors.address_a
+          ? errors.address_a.type === "minLength"
+            ? errors.address_a.message
             : "Address is required"
           : ""}
         <input
+          disabled={isEnabled}
           className="input"
           {...register("address_b", {
+            value: userInfo?.address_b,
             required: true,
             minLength: {
               value: 2,
@@ -166,8 +216,10 @@ const ProfilePage = () => {
             : "Address is required"
           : ""}
         <input
+          disabled={isEnabled}
           className="input"
           {...register("address_c", {
+            value: userInfo?.address_c,
             required: true,
             minLength: {
               value: 2,
@@ -177,34 +229,35 @@ const ProfilePage = () => {
           placeholder="Address 3"
         />
         <input
+          disabled={isEnabled}
           className="input"
-          {...register("nextOfKin", {
+          {...register("nok_name", {
+            value: userInfo?.nok_name,
             required: true,
             minLength: {
               value: 2,
               message: "Name should be more than 2 characters",
             },
           })}
-          placeholder="Next of kin Name"
+          placeholder="Next of kin fullname"
         />
         <input
+          disabled={isEnabled}
           className="input"
-          {...register("nextOfKin", {
+          {...register("nok_phoneNumber", {
+            value: userInfo?.nok_phoneNumber,
             required: true,
-            minLength: {
-              value: 2,
-              message: "Name should be more than 2 characters",
-            },
           })}
-          placeholder="Next of kin Phone Number"
+          placeholder="Next of kin phone number"
         />
         <input
+          disabled={isEnabled}
           className="input"
           {...register("nok_email", {
             required: true,
             pattern: /^[a-z0-9.z_%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
           })}
-          placeholder="Next of Kin Email"
+          placeholder="Next of kin email"
         />
         {errors.email
           ? errors.email.type === "pattern"
@@ -212,8 +265,9 @@ const ProfilePage = () => {
             : "Email is required"
           : ""}
         <input
+          disabled={isEnabled}
           className="input"
-          {...register("nextOfKin", {
+          {...register("nok_address_a", {
             required: true,
             minLength: {
               value: 2,
@@ -228,8 +282,9 @@ const ProfilePage = () => {
             : "Address is required"
           : ""}
         <input
+          disabled={isEnabled}
           className="input"
-          {...register("nextOfKin", {
+          {...register("nok_address_b", {
             required: true,
             minLength: {
               value: 2,
@@ -239,8 +294,9 @@ const ProfilePage = () => {
           placeholder="Next of kin Address 2"
         />
         <input
+          disabled={isEnabled}
           className="input"
-          {...register("nextOfKin", {
+          {...register("nok_address_c", {
             required: true,
             minLength: {
               value: 2,
@@ -249,9 +305,21 @@ const ProfilePage = () => {
           })}
           placeholder="Next of kin Address 3"
         />
+        <input
+          disabled
+          className="input"
+          {...register("referee_a")}
+          placeholder="Referee 1"
+        />
+        <input
+          disabled
+          className="input"
+          {...register("referee_b")}
+          placeholder="Referee 2"
+        />
 
         <button
-          className="bg-blue-800 w-28 mt-3 rounded-xl py-2 px-5 text-white cursor-pointer"
+          className="bg-blue-900 w-[94px] ml-[172px] mt-1 rounded-lg py-2 text-white cursor-pointer"
           type="submit">
           Save
         </button>
